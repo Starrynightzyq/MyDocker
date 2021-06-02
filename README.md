@@ -7,4 +7,5 @@ Docker YES !!!
 
 - ubuntu-vivado
 
-  在 docker 中安装 Xilinx Vivado，具体使用方法见[]()。
+  在 docker 中安装 Xilinx Vivado，具体使用方法见[在 docker 中安装 vivado](https://zhouyuqian.com/2021/06/01/docker-vivado/)。
+
