@@ -28,5 +28,3 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 CMD ["/bin/bash", "-l"]
-
-RUN source /opt/Xilinx/Vivado/2020.2/.settings64-Vivado.sh
