@@ -1,0 +1,13 @@
+version: '3'
+services:
+    eda:
+      image: mockingbird
+      container_name: mockingbird
+      ports:
+        - "8081:8080"
+      volumes:
+        - /Users/zhouyuqian/MyDocuments/MyDocker/MockingBird:/mnt/scripts
+      tty: true # -t tty
+      stdin_open: true # -i interactive
+      # entrypoint: ["/mnt/scripts/startup_run.sh"]  # 执行 sh
+      entrypoint: ["/bin/bash", "-l"]  # 执行 sh

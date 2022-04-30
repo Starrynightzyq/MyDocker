@@ -1,0 +1,18 @@
+version: '3'
+services:
+  web:
+    container_name: wxedge
+    image: onething1/wxedge
+    restart: always
+    privileged: true
+    network_mode: host
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /share/DATA_DV2/docker/wxedge_storage:/storage:rw
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+
