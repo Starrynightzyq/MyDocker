@@ -14,6 +14,7 @@ services:
       - TZ=Asia/Shanghai
     ports:
       - "1880:1880"
+      - "3001:3001"
     volumes:
       - /home/ubuntu/MyDocker/nodered:/data
     restart: unless-stopped
