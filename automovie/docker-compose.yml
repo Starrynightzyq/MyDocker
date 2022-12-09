@@ -1,5 +1,10 @@
 version: "3"
 
+networks:
+  amnetv6:
+    name: amnetv6
+    external: true
+
 services:
   jackett:
     container_name: jackett
@@ -13,6 +18,8 @@ services:
     volumes:
       - /share/homes/fitz/docker/jackett:/config
     restart: unless-stopped
+    networks:
+      - amnetv6
 
   flaresolverr:
     container_name: flaresolverr
@@ -25,6 +32,8 @@ services:
     ports:
       - 8191:8191
     restart: unless-stopped
+    networks:
+      - amnetv6
 
   radarr:
     container_name: radarr
@@ -32,19 +41,20 @@ services:
     environment:
       - PUID=1000
       - PGID=100
-      - TZ=Europe/London
+      - TZ=Asia/Shanghai
     ports:
       - 7878:7878
     volumes:
       - /share/homes/fitz/docker/radarr:/config
-      - /share/homes/fitz/DATA/aria2-completed/movies:/movies
-      - /share/homes/fitz/DATA/aria2-downloads:/downloads
-      - /share/OneDrive_SEU_NAS/media:/onedrive_media
+      - /share/Media:/media
+      - /share/Media_Tmp:/media_tmp
     restart: unless-stopped
+    networks:
+      - amnetv6
 
   sonarr:
     container_name: sonarr
-    image: linuxserver/sonarr:latest
+    image: lscr.io/linuxserver/sonarr:latest
     environment:
       - PUID=1000
       - PGID=100
@@ -53,36 +63,40 @@ services:
       - 8987:8989
     volumes:
       - /share/homes/fitz/docker/sonarr:/config
-      - /share/homes/fitz/DATA/aria2-completed/TV:/TV
-      - /share/homes/fitz/DATA/aria2-downloads:/downloads
-      - /share/OneDrive_SEU_NAS/media:/onedrive_media
+      - /share/Media:/media
+      - /share/Media_Tmp:/media_tmp
     restart: unless-stopped
+    networks:
+      - amnetv6
 
   chinesesubfinder:
-    container_name: chinesesubfinder
-    image: allanpk716/chinesesubfinder:latest
+    image: allanpk716/chinesesubfinder:v0.45.1
+    volumes:
+      - /share/homes/fitz/docker/chinesesubfinder/config:/config
+      - /share/homes/fitz/docker/chinesesubfinder/browser:/root/.cache/rod/browser
+      - /share/Media:/media
     environment:
       - PUID=1000
       - PGID=100
+      - PERMS=false
       - TZ=Asia/Shanghai
+      - UMASK=002
+    restart: unless-stopped
+    hostname: chinesesubfinder
+    container_name: chinesesubfinder
     ports:
       - 19035:19035
-    volumes:
-      - /share/homes/fitz/docker/chinesesubfinder/cache:/app/cache
-      - /share/homes/fitz/docker/chinesesubfinder/config:/config
-      - /share/homes/fitz/DATA/aria2-downloads:/downloads
-      - /share/homes/fitz/DATA/aria2-completed/movies:/movies
-      - /share/homes/fitz/DATA/aria2-completed/TV:/TV
-      - /share/OneDrive_SEU_NAS/media:/onedrive_media
-    restart: unless-stopped
-    links:
-      - emby
-    depends_on:
-      - emby
+      - 19037:19037  # webui
+    logging:
+        driver: "json-file"
+        options:
+          max-size: "100m"
+    networks:
+      - amnetv6
 
   qbittorrent:
     container_name: qbittorrent
-    image: johngong/qbittorrent:latest
+    image: johngong/qbittorrent:4.5.0-4.5.0.10
     environment:
       - QB_WEBUI_PORT=8989
       - QB_EE_BIN=false
@@ -96,57 +110,11 @@ services:
       - 8989:8989
     volumes:
       - /share/homes/fitz/docker/qbittorrent:/config
-      - /share/homes/fitz/DATA/aria2-downloads:/Downloads
-      - /share/homes/fitz/DATA/aria2-completed:/Completed
-      - /share/OneDrive_SEU_NAS/media:/onedrive_media
+      - /share/Media:/media
+      - /share/Media_Tmp:/media_tmp
     restart: unless-stopped
-  
-  ombi:
-    image: lscr.io/linuxserver/ombi:latest
-    container_name: ombi
-    restart: unless-stopped
-    environment:
-      - PUID=1000
-      - PGID=100
-      - TZ=Asia/Shanghai
-    volumes:
-      - /share/homes/fitz/docker/ombi:/config
-    ports:
-      - 3579:3579
-    dns:
-      - 192.168.12.2
-      - 223.5.5.5
-    links:
-      - emby
-      - sonarr
-      - radarr
-    depends_on:
-      - emby
-      - sonarr
-      - radarr
-
-  emby:
-    image: emby/embyserver
-    container_name: emby
-    # network_mode: host # Enable DLNA and Wake-on-Lan
-    environment:
-      - UID=1000 # The UID to run emby as (default: 2)
-      - GID=100 # The GID to run emby as (default 2)
-      - GIDLIST=100 # A comma-separated list of additional GIDs to run emby as (default: 2)
-    volumes:
-      - /share/homes/fitz/docker/emby:/config # Configuration directory
-      - /share/aria2-complete/TV:/mnt/tvshows # Media directory
-      - /share/aria2-complete/movies:/mnt/movies # Media directory
-      - /share/OneDrive_SEU_NAS/media:/onedrive_media
-    ports:
-      - 8096:8096 # HTTP port
-      # - 8920:8920 # HTTPS port
-    dns:
-      - 192.168.12.2
-      - 223.5.5.5
-    devices:
-      - /dev/dri:/dev/dri # VAAPI/NVDEC/NVENC render nodes
-    restart: unless-stopped
+    networks:
+      - amnetv6
     
   jellyfin:
     container_name: jellyfin
@@ -160,18 +128,15 @@ services:
       - JELLYFIN_PublishedServerUrl=192.168.12.10
     volumes:
       - /share/homes/fitz/docker/jellyfin:/config
-      - /share/aria2-complete/TV:/data/tvshows
-      - /share/aria2-complete/movies:/data/movies
-      - /share/OneDrive_SEU_NAS/media:/onedrive_media
+      - /share/Media:/media
     ports:
       - 8097:8096
       - 8920:8920 # HTTPS port
       - 7359:7359/udp
       - 1901:1900/udp
-    dns:
-      - 192.168.12.2
-      - 223.5.5.5
     restart: unless-stopped
+    networks:
+      - amnetv6
     # privileged: true
     # command:
     #   - sh
@@ -182,3 +147,63 @@ services:
     #       bash
     # tty: true
     # stdin_open: true
+
+  # emby:
+  #   container_name: emby
+  #   image: linuxserver/emby:latest
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=100
+  #     - TZ=Asia/Shanghai
+  #   volumes:
+  #     - /share/homes/fitz/docker/emby:/config
+  #     - /share/Media:/media
+  #   ports:
+  #     - 8096:8096
+  #   restart: unless-stopped
+  #   networks:
+  #     - amnetv6
+
+  qbit-auto-limit:
+    container_name: qbit-auto-limit
+    image: xiaoyi510/qbit-auto-limit:v0.0.5
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Asia/Shanghai
+    volumes:
+      - /share/homes/fitz/docker/qbit-auto-limit:/app/conf
+    restart: unless-stopped
+    networks:
+      - amnetv6
+
+  # busybox:
+  #   image: busybox:latest
+  #   container_name: busybox
+  #   restart: unless-stopped
+  #   tty: true
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=100
+  #     - TZ=Asia/Shanghai
+  #   networks:
+  #     - amnetv6
+
+  nastools:
+    image: jxxghp/nas-tools:latest
+    container_name: nastools
+    hostname: nastools
+    ports:
+      - 3000:3000
+    volumes:
+      - /share/homes/fitz/docker/nastools:/config
+      - /share/Media:/media
+      - /share/Media_Tmp:/media_tmp
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Asia/Shanghai
+      - UMASK=002
+    restart: unless-stopped
+    networks:
+      - amnetv6
