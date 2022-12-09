@@ -166,7 +166,7 @@ services:
 
   qbit-auto-limit:
     container_name: qbit-auto-limit
-    image: xiaoyi510/qbit-auto-limit:latest
+    image: xiaoyi510/qbit-auto-limit:v0.0.5
     environment:
       - PUID=1000
       - PGID=100
