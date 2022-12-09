@@ -8,7 +8,7 @@ networks:
 services:
   jackett:
     container_name: jackett
-    image: linuxserver/jackett:latest
+    image: lscr.io/linuxserver/jackett:latest
     environment:
       - PUID=1000
       - PGID=100
@@ -70,7 +70,7 @@ services:
       - amnetv6
 
   chinesesubfinder:
-    image: allanpk716/chinesesubfinder:v0.45.1
+    image: allanpk716/chinesesubfinder:latest
     volumes:
       - /share/homes/fitz/docker/chinesesubfinder/config:/config
       - /share/homes/fitz/docker/chinesesubfinder/browser:/root/.cache/rod/browser
@@ -96,7 +96,7 @@ services:
 
   qbittorrent:
     container_name: qbittorrent
-    image: johngong/qbittorrent:4.5.0-4.5.0.10
+    image: johngong/qbittorrent:latest
     environment:
       - QB_WEBUI_PORT=8989
       - QB_EE_BIN=false
@@ -150,7 +150,7 @@ services:
 
   # emby:
   #   container_name: emby
-  #   image: linuxserver/emby:latest
+  #   image: lscr.io/linuxserver/emby:latest
   #   environment:
   #     - PUID=1000
   #     - PGID=100
@@ -166,7 +166,7 @@ services:
 
   qbit-auto-limit:
     container_name: qbit-auto-limit
-    image: xiaoyi510/qbit-auto-limit:v0.0.5
+    image: xiaoyi510/qbit-auto-limit:latest
     environment:
       - PUID=1000
       - PGID=100
