@@ -27,7 +27,7 @@ services:
     # network_mode: host
     network_mode: bridge
     ports:
-      - 6800:6800
+      - 6801:6800
       - 6888:6888
       - 6888:6888/udp
     restart: unless-stopped
