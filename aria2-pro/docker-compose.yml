@@ -9,7 +9,7 @@ services:
       - PUID=1000
       - PGID=100
       - UMASK_SET=022
-      - RPC_SECRET=<xxx>
+      - RPC_SECRET=123.com
       - SPECIAL_MODE=move
       - RPC_PORT=6800
       - LISTEN_PORT=6888
