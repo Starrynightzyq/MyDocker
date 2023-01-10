@@ -1,0 +1,24 @@
+version: '3.3'
+
+networks:
+  amnetv6:
+    name: amnetv6
+    external: true
+
+services:
+  alist:
+    image: 'xhofe/alist:latest'
+    volumes:
+      - '/share/homes/fitz/docker/alist:/opt/alist/data'
+      - '/share/CACHEDEV3_DATA/alist_temp:/temp'
+    ports:
+      - '5244:5244'
+    environment:
+      - PUID=1000
+      - PGID=100
+      - UMASK=002
+    container_name: alist
+    restart: unless-stopped
+    networks:
+      - amnetv6
+
