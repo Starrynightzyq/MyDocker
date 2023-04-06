@@ -86,7 +86,7 @@ services:
     container_name: chinesesubfinder
     ports:
       - 19035:19035
-      - 19037:19037  # webui
+      # - 19037:19037  # webui
     logging:
         driver: "json-file"
         options:
