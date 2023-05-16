@@ -10,7 +10,7 @@ services:
     image: 'xhofe/alist:latest'
     volumes:
       - '/share/homes/fitz/docker/alist:/opt/alist/data'
-      - '/share/alist_temp:/temp'
+      - '/share/CACHEDEV6_DATA/alist_temp:/temp'
     ports:
       - '5244:5244'
     environment:
