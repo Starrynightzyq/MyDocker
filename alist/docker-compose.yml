@@ -21,4 +21,5 @@ services:
     restart: unless-stopped
     networks:
       - amnetv6
+    privileged: true
 
