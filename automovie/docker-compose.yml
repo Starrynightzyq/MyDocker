@@ -189,21 +189,21 @@ services:
   #   networks:
   #     - amnetv6
 
-  nastools:
-    image: jxxghp/nas-tools:latest
-    container_name: nastools
-    hostname: nastools
-    ports:
-      - 3000:3000
-    volumes:
-      - /share/homes/fitz/docker/nastools:/config
-      - /share/Media:/media
-      - /share/Media_Tmp:/media_tmp
-    environment:
-      - PUID=1000
-      - PGID=100
-      - TZ=Asia/Shanghai
-      - UMASK=002
-    restart: unless-stopped
-    networks:
-      - amnetv6
+  # nastools:
+  #   image: jxxghp/nas-tools:latest
+  #   container_name: nastools
+  #   hostname: nastools
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - /share/homes/fitz/docker/nastools:/config
+  #     - /share/Media:/media
+  #     - /share/Media_Tmp:/media_tmp
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=100
+  #     - TZ=Asia/Shanghai
+  #     - UMASK=002
+  #   restart: unless-stopped
+  #   networks:
+  #     - amnetv6
