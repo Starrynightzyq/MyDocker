@@ -110,6 +110,7 @@ services:
       - 8989:8989
     volumes:
       - /share/homes/fitz/docker/qbittorrent:/config
+      - /share/homes/fitz/docker/qbittorrent_vuetorrent:/vuetorrent
       - /share/Media:/media
       - /share/Media_Tmp:/media_tmp
     restart: unless-stopped
