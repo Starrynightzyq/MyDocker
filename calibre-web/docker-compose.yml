@@ -1,0 +1,18 @@
+---
+services:
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - /share/homes/fitz/docker/calibre-web:/config
+      - /share/Media/Books:/books
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+
