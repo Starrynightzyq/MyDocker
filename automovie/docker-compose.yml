@@ -178,6 +178,23 @@ services:
     networks:
       - amnetv6
 
+  xarr-notify:
+    container_name: xarr-notify
+    image: xiaoyi510/xarr-notify:latest
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Asia/Shanghai
+    volumes:
+      - /share/homes/fitz/docker/xarr-notify:/app/conf
+      - /share/homes/fitz/docker/radarr/MediaCover:/app/images/radarr
+      - /share/homes/fitz/docker/sonarr/MediaCover:/app/images/sonarr
+    ports:
+      - 8085:8085
+    restart: unless-stopped
+    networks:
+      - amnetv6
+
   # busybox:
   #   image: busybox:latest
   #   container_name: busybox
