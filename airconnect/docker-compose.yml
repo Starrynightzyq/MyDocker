@@ -1,0 +1,11 @@
+---
+services:
+  airconnect:
+    network_mode: host
+    image: 1activegeek/airconnect
+    volumes:
+      - /share/homes/fitz/docker/airconnect:/config
+    environment:
+      - AIRCAST_VAR=-x /config/config.xml
+      - AIRUPNP_VAR=kill
+    restart: unless-stopped
