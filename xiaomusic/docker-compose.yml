@@ -7,7 +7,7 @@ services:
     ports:
       - 58090:8090
     environment:
-      -XIAOMUSIC_PUBLIC_PORT=58090
+      - XIAOMUSIC_PUBLIC_PORT=58090
       - PUID=1000
       - PGID=100
       - TZ=Asia/Shanghai
