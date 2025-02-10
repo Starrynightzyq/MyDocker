@@ -1,0 +1,16 @@
+---
+services:
+  xiaomusic:
+    image: hanxi/xiaomusic
+    container_name: xiaomusic
+    restart: unless-stopped
+    ports:
+      - 58090:8090
+    environment:
+      -XIAOMUSIC_PUBLIC_PORT=58090
+      - PUID=1000
+      - PGID=100
+      - TZ=Asia/Shanghai
+    volumes:
+      - /share/homes/fitz/docker/xiaomusic_conf:/app/conf
+      - /share/xiaomusic_music:/app/music
