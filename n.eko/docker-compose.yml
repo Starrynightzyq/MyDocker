@@ -1,0 +1,19 @@
+version: "3.4"
+services:
+  neko:
+    container_name: edge
+    image: "ghcr.io/m1k1o/neko/intel-microsoft-edge:latest"
+    restart: "unless-stopped"
+    shm_size: "2gb"
+    ports:
+      - "8081:8080"
+      - "52000-52100:52000-52100/udp"
+    environment:
+      PUID: 1000
+      PGID: 100
+      TZ: Asia/Shanghai
+      NEKO_SCREEN: 1920x1080@30
+      NEKO_PASSWORD: neko
+      NEKO_PASSWORD_ADMIN: admin
+      NEKO_EPR: 52000-52100
+      NEKO_ICELITE: 1
