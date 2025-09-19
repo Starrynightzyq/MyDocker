@@ -6,7 +6,7 @@ services:
     restart: "unless-stopped"
     shm_size: "2gb"
     ports:
-      - "8081:8080"
+      - "8082:8080"
       - "52000-52100:52000-52100/udp"
     environment:
       PUID: 1000
