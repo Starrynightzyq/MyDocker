@@ -1,0 +1,23 @@
+version: "3.4"
+services:
+  chromium:
+    image: lscr.io/linuxserver/chromium:latest
+    container_name: chromium
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Asia/Shanghai
+      - CHROME_CLI=https://www.google.com/
+      - LANGUAGE=zh_CN:zh
+      - LANG=zh_CN.UTF-8
+      - LANG=C.UTF-8
+    volumes:
+      - /share/homes/fitz/docker/chromium:/config
+      - /share/Public/docker_browser_downloads:/downloads
+    ports:
+      - 3000:3000
+      - 3001:3001
+    shm_size: "1gb"
+    restart: unless-stopped
