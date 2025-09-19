@@ -12,7 +12,7 @@ services:
       PUID: 1000
       PGID: 100
       TZ: Asia/Shanghai
-      NEKO_SCREEN: 1920x1080@30
+      NEKO_SCREEN: 1280x720@30
       NEKO_PASSWORD: neko
       NEKO_PASSWORD_ADMIN: admin
       NEKO_EPR: 52000-52100
